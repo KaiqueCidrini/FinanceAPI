@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "dgSpecHash": "97UO9GYUXV8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dtiDigital\\Desktop\\Projetos\\FinanceAPI\\FinanceAPI\\FinanceAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dtiDigital\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\dtiDigital\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
+    "C:\\Users\\dtiDigital\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
+    "C:\\Users\\dtiDigital\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
+    "C:\\Users\\dtiDigital\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.6.2\\swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
+    "C:\\Users\\dtiDigital\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.6.2\\swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Ocorreu um erro ao obter os dados de vulnerabilidade do pacote: Não é possível carregar o índice de serviço para a origem https://pkgs.dev.azure.com/alm-animaeducacao/_packaging/animacore/nuget/v3/index.json.",
+      "projectPath": "C:\\Users\\dtiDigital\\Desktop\\Projetos\\FinanceAPI\\FinanceAPI\\FinanceAPI.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\dtiDigital\\Desktop\\Projetos\\FinanceAPI\\FinanceAPI\\FinanceAPI.csproj",
+      "targetGraphs": []
+    }
+  ]
+}
