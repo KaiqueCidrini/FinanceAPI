@@ -1,5 +1,7 @@
 ﻿using FinanceAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using FinanceAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceAPI.Controllers
 {
@@ -7,69 +9,79 @@ namespace FinanceAPI.Controllers
     [Route("[controller]")]
     public class BancoController : ControllerBase
     {
-        public BancoController()
-        {
 
-        }
-
-        [HttpGet("{bankName}")]
-        public string Get([FromRoute] string bankName)
-        {
-            List<string> bankList = new()
-            {
-               "Itau",
-               "Nubank"
-            };
-            if (bankList.Contains(bankName))
-            {
-                return bankName;
-            } else
-            {
-                return ("Valor Invalido");
-            }
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Banco>> GetById(int id, [FromServices] DataContext context)
+        {   
+            var bancos = await context.Bancos.AsNoTracking().FirstOrDefaultAsync();
+            return Ok(bancos);
         }
         [HttpGet]
-        public List<string> GetAll()
+        public async Task<ActionResult<List<Banco>>> GetAll([FromServices]DataContext context)
         {
-            List<string> bankList = new()
-            {
-               "Itau",
-               "Nubank"
-            };
-            return bankList;
+
+            var bancos = await context.Bancos.AsNoTracking().ToListAsync();
+            return Ok(bancos);
         }
-        [HttpDelete("{bankName}")]
-        public List<string> Delete([FromRoute] string bankName)
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<Banco>> Delete(int id, [FromServices]DataContext context)
         {
-            List<string> bankList = new()
+            var banco = await context.Bancos.FirstOrDefaultAsync(x => x.Id == id);
+            if(banco == null)
             {
-               "Itau",
-               "Nubank"
-            };
-            bankList.Remove(bankName);
-            return bankList;
+                return NotFound(new { Message = "Banco não encontrado." });
+            }
+            try
+            {
+                context.Bancos.Remove(banco);
+                await context.SaveChangesAsync();
+                return Ok(new { Message = "Banco removido com sucesso!" });
+            }
+            catch(Exception)
+            {
+                return BadRequest(new { Message = "Não foi possivel encontrar o banco." });
+            }
         }
         [HttpPost]
-        public List<BancoModel> Create([FromBody] BancoModel model)
+        public async Task<ActionResult<Banco>> Create([FromBody]Banco model, [FromServices]DataContext context)
         {
-            List<BancoModel> bancoList = new();
-            bancoList.Add(model);
-            return bancoList;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                context.Bancos.Add(model);
+                await context.SaveChangesAsync();
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+               return BadRequest(new { Message = "Não foi possivel criar o banco" });
+            }
         }
-        [HttpPut("{id}")]
-        public List<BancoModel> Update([FromBody] BancoModel bancoName, [FromRoute] int id)
+        [HttpPut("")]
+        public async Task<ActionResult<Banco>> Update([FromBody]Banco model, [FromServices]DataContext context)
         {
-            List<BancoModel> bancoList = new List<BancoModel>();
-            bancoList.Add(new BancoModel(1, "Nubank"));
-            bancoList.Add(new BancoModel(2, "Itau"));
-            bancoList.Add(new BancoModel(3, "Inter"));
-
-            var oldName = bancoList.Find(b => b.Id == id);
-            if (oldName == null)
-                return [];
-
-            oldName.Name = bancoName.Name;
-            return bancoList;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                context.Entry<Banco>(model).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+                return Ok(model); 
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                return BadRequest(new { Message = "Não foi possivel atualizar o Banco" });
+            }
+            catch(Exception)
+            {
+                return BadRequest(new { Message = "Não foi possivel atualizar o Banco" });
+            }
         }
 
     }
