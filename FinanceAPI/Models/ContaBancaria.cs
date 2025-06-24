@@ -22,7 +22,5 @@ namespace FinanceAPI.Models
 
         [ForeignKey("BancoId")]
         public Banco Banco { get; set; }
-
-
     }
 }

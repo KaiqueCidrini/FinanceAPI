@@ -10,12 +10,15 @@ namespace FinanceAPI.Controllers
     public class BancoController : ControllerBase
     {
 
+        //Faz a busca de um banco cadastrado através do ID.
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Banco>> GetById(int id, [FromServices] DataContext context)
         {   
             var bancos = await context.Bancos.AsNoTracking().FirstOrDefaultAsync();
             return Ok(bancos);
         }
+
+        //Lista todos os bancos cadastrados.
         [HttpGet]
         public async Task<ActionResult<List<Banco>>> GetAll([FromServices]DataContext context)
         {
@@ -23,7 +26,7 @@ namespace FinanceAPI.Controllers
             var bancos = await context.Bancos.AsNoTracking().ToListAsync();
             return Ok(bancos);
         }
-
+        //Deleta um banco cadastrado através do ID.
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<Banco>> Delete(int id, [FromServices]DataContext context)
         {
@@ -43,6 +46,7 @@ namespace FinanceAPI.Controllers
                 return BadRequest(new { Message = "Não foi possivel encontrar o banco." });
             }
         }
+        //Gera um novo banco no database.
         [HttpPost]
         public async Task<ActionResult<Banco>> Create([FromBody]Banco model, [FromServices]DataContext context)
         {
@@ -61,6 +65,7 @@ namespace FinanceAPI.Controllers
                return BadRequest(new { Message = "Não foi possivel criar o banco" });
             }
         }
+        //Atualiza um banco.
         [HttpPut("")]
         public async Task<ActionResult<Banco>> Update([FromBody]Banco model, [FromServices]DataContext context)
         {

@@ -10,6 +10,7 @@ namespace Finance.API.Controllers
     [Route("[controller]")]
     public class ContaController : ControllerBase
     {
+        //Faz a busca de todas contas bancarias cadastradas.
         [HttpGet]
         [Route("")]
         //[Authorize(Roles = "manager")]
@@ -18,9 +19,11 @@ namespace Finance.API.Controllers
             var conta = await context.Contas.AsNoTracking().ToListAsync();
             return Ok(conta);
         }
+
+
         [HttpPost]
         [Route("")]
-        //[AllowAnonymous]
+        //[AllowAnonymous] -- Questão de autenticação não entendi muito bem.
         public async Task<ActionResult<ContaBancaria>> Post([FromServices]DataContext context, [FromBody]ContaBancaria model)
         {
 
